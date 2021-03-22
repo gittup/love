@@ -20,6 +20,8 @@
 
 #include "common/config.h"
 #include "wrap_Graphics.h"
+#include "wrap_Effect.h"
+#include "wrap_EffectManager.h"
 #include "Texture.h"
 #include "image/ImageData.h"
 #include "image/Image.h"
@@ -550,6 +552,16 @@ int w_captureScreenshot(lua_State *L)
 	);
 
 	return 0;
+}
+
+int w_getEffectManager(lua_State *L)
+{
+	EffectManager *manager;
+	luax_catchexcept(L, [&]() { manager = instance()->getEffectManager(); });
+
+	luax_pushtype(L, manager);
+
+	return 1;
 }
 
 int w_setScissor(lua_State *L)
@@ -1254,6 +1266,20 @@ int w_newCanvas(lua_State *L)
 
 	luax_pushtype(L, canvas);
 	canvas->release();
+	return 1;
+}
+
+int w_newEffect(lua_State *L)
+{
+	using namespace love::filesystem;
+
+	luax_checkgraphicscreated(L);
+
+	Effect *effect = nullptr;
+	std::string filename = luax_checkstring(L, 1);
+	luax_catchexcept(L, [&](){ effect = instance()->newEffect(filename); });
+	luax_pushtype(L, effect);
+	effect->release();
 	return 1;
 }
 
@@ -2923,6 +2949,7 @@ static const luaL_Reg functions[] =
 	{ "newSpriteBatch", w_newSpriteBatch },
 	{ "newParticleSystem", w_newParticleSystem },
 	{ "newCanvas", w_newCanvas },
+	{ "newEffect", w_newEffect },
 	{ "newShader", w_newShader },
 	{ "newMesh", w_newMesh },
 	{ "newText", w_newText },
@@ -2980,6 +3007,8 @@ static const luaL_Reg functions[] =
 	{ "getStats", w_getStats },
 
 	{ "captureScreenshot", w_captureScreenshot },
+
+	{ "getEffectManager", w_getEffectManager },
 
 	{ "draw", w_draw },
 	{ "drawLayer", w_drawLayer },
@@ -3043,6 +3072,8 @@ static const lua_CFunction types[] =
 {
 	luaopen_drawable,
 	luaopen_texture,
+	luaopen_effect,
+	luaopen_effectmanager,
 	luaopen_font,
 	luaopen_image,
 	luaopen_quad,

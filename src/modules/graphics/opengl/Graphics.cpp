@@ -30,6 +30,7 @@
 #include "window/Window.h"
 #include "Buffer.h"
 #include "ShaderStage.h"
+#include "EffectManager.h"
 
 #include "libraries/xxHash/xxhash.h"
 
@@ -57,6 +58,7 @@ namespace opengl
 Graphics::Graphics()
 	: windowHasStencil(false)
 	, mainVAO(0)
+	, effectManager(0)
 {
 	gl = OpenGL();
 	Canvas::resetFormatSupport();
@@ -109,6 +111,20 @@ love::graphics::Image *Graphics::newImage(TextureType textype, PixelFormat forma
 love::graphics::Canvas *Graphics::newCanvas(const Canvas::Settings &settings)
 {
 	return new Canvas(settings);
+}
+
+love::graphics::Effect *Graphics::newEffect(std::string &filename)
+{
+	love::graphics::Effect *effect = new Effect(getEffectManager(), filename);
+	return effect;
+}
+
+EffectManager *Graphics::getEffectManager()
+{
+	if(!effectManager) {
+		effectManager = new EffectManager();
+	}
+	return effectManager;
 }
 
 love::graphics::ShaderStage *Graphics::newShaderStageInternal(ShaderStage::StageType stage, const std::string &cachekey, const std::string &source, bool gles)
@@ -341,6 +357,7 @@ void Graphics::draw(const DrawIndexedCommand &cmd)
 	else
 		glDrawElements(glprimitivetype, cmd.indexCount, gldatatype, gloffset);
 
+	getEffectManager()->draw();
 	++drawCalls;
 }
 

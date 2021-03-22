@@ -33,6 +33,7 @@
 #include "vertex.h"
 #include "Texture.h"
 #include "Canvas.h"
+#include "Effect.h"
 #include "Font.h"
 #include "ShaderStage.h"
 #include "Shader.h"
@@ -62,6 +63,7 @@ class ParticleSystem;
 class Text;
 class Video;
 class Buffer;
+class EffectManager;
 
 typedef Optional<Colorf> OptionalColorf;
 
@@ -484,6 +486,8 @@ public:
 
 	virtual Canvas *newCanvas(const Canvas::Settings &settings) = 0;
 
+	virtual Effect *newEffect(std::string &filename) = 0;
+
 	ShaderStage *newShaderStage(ShaderStage::StageType stage, const std::string &source);
 	Shader *newShader(const std::string &vertex, const std::string &pixel);
 
@@ -512,6 +516,8 @@ public:
 	 * Flips buffers. (Rendered geometry is presented on screen).
 	 **/
 	virtual void present(void *screenshotCallbackData) = 0;
+
+	virtual EffectManager *getEffectManager() = 0;
 
 	/**
 	 * Sets the current graphics display viewport dimensions.

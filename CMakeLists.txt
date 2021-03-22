@@ -526,6 +526,10 @@ set(LOVE_SRC_MODULE_GRAPHICS_ROOT
 	src/modules/graphics/Deprecations.h
 	src/modules/graphics/Drawable.cpp
 	src/modules/graphics/Drawable.h
+	src/modules/graphics/Effect.cpp
+	src/modules/graphics/Effect.h
+	src/modules/graphics/EffectHandle.cpp
+	src/modules/graphics/EffectHandle.h
 	src/modules/graphics/Font.cpp
 	src/modules/graphics/Font.h
 	src/modules/graphics/Graphics.cpp
@@ -561,6 +565,10 @@ set(LOVE_SRC_MODULE_GRAPHICS_ROOT
 	src/modules/graphics/Volatile.h
 	src/modules/graphics/wrap_Canvas.cpp
 	src/modules/graphics/wrap_Canvas.h
+	src/modules/graphics/wrap_Effect.cpp
+	src/modules/graphics/wrap_Effect.h
+	src/modules/graphics/wrap_EffectManager.cpp
+	src/modules/graphics/wrap_EffectManager.h
 	src/modules/graphics/wrap_Font.cpp
 	src/modules/graphics/wrap_Font.h
 	src/modules/graphics/wrap_Graphics.cpp
@@ -590,6 +598,8 @@ set(LOVE_SRC_MODULE_GRAPHICS_OPENGL
 	src/modules/graphics/opengl/Buffer.h
 	src/modules/graphics/opengl/Canvas.cpp
 	src/modules/graphics/opengl/Canvas.h
+	src/modules/graphics/opengl/EffectManager.cpp
+	src/modules/graphics/opengl/EffectManager.h
 	src/modules/graphics/opengl/FenceSync.cpp
 	src/modules/graphics/opengl/FenceSync.h
 	src/modules/graphics/opengl/Graphics.cpp
@@ -1258,6 +1268,106 @@ set(LOVE_SRC_3P_DRFLAC
 # dr_flac has no implementation files of its own.
 
 #
+# Effekseer
+#
+
+set(LOVE_SRC_3P_EFFEKSEER_ROOT
+	src/libraries/effekseer/src/Effekseer/Effekseer.h
+	src/libraries/effekseer/src/Effekseer/Effekseer.Internal.h
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Client.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Color.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.DefaultEffectLoader.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.DefaultFile.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Effect.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.EffectNode.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.EffectNodeModel.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.EffectNodeRibbon.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.EffectNodeRing.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.EffectNodeRoot.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.EffectNodeSprite.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.EffectNodeTrack.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.FCurves.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Instance.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.InstanceChunk.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.InstanceContainer.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.InstanceGlobal.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.InstanceGroup.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.InternalScript.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Manager.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Matrix43.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Matrix44.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.RectF.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Setting.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Server.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Socket.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Vector2D.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Effekseer.Vector3D.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Culling/Culling3D.Grid.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Culling/Culling3D.Layer.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Culling/Culling3D.Matrix44.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Culling/Culling3D.ObjectInternal.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Culling/Culling3D.ReferenceObject.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Culling/Culling3D.Vector3DF.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Culling/Culling3D.WorldInternal.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Material/Effekseer.Material.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Material/Effekseer.CompiledMaterial.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Material/Effekseer.MaterialCompiler.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/IO/Effekseer.EfkEfcFactory.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Parameter/Effekseer.Parameters.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Utils/Effekseer.CustomAllocator.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/SIMD/Effekseer.Mat43f.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/SIMD/Effekseer.Mat44f.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/SIMD/Effekseer.SIMDUtils.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Noise/CurlNoise.cpp
+	src/libraries/effekseer/src/Effekseer/Effekseer/Noise/PerlinNoise.cpp
+)
+
+set(LOVE_SRC_3P_EFFEKSEER_RENDERER_COMMON
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.CommonUtils.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.DDSTextureLoader.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.IndexBufferBase.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.ModelRendererBase.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.PngTextureLoader.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.Renderer.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.Renderer_Impl.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.RenderStateBase.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.RibbonRendererBase.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.RingRendererBase.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.SpriteRendererBase.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.TrackRendererBase.cpp
+	src/libraries/effekseer/src/EffekseerRendererCommon/EffekseerRenderer.VertexBufferBase.cpp
+)
+
+set(LOVE_SRC_3P_EFFEKSEER_RENDERER_GL
+	src/libraries/effekseer/src/EffekseerMaterialCompiler/OpenGL/EffekseerMaterialCompilerGL.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.DeviceObjectCollection.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.IndexBuffer.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.MaterialLoader.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.TextureLoader.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.ModelRenderer.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.DeviceObject.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.ModelLoader.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.Renderer.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.RenderState.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.GLExtension.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.VertexArray.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.VertexBuffer.cpp
+	src/libraries/effekseer/src/EffekseerRendererGL/EffekseerRenderer/EffekseerRendererGL.Shader.cpp
+)
+
+set(LOVE_SRC_3P_EFFEKSEER
+	${LOVE_SRC_3P_EFFEKSEER_ROOT}
+	${LOVE_SRC_3P_EFFEKSEER_RENDERER_COMMON}
+	${LOVE_SRC_3P_EFFEKSEER_RENDERER_GL}
+)
+
+add_library(love_3p_effekseer ${LOVE_SRC_3P_EFFEKSEER})
+target_compile_definitions(love_3p_effekseer PUBLIC -D__EFFEKSEER_RENDERER_INTERNAL_LOADER__)
+target_compile_options(love_3p_effekseer BEFORE PRIVATE -include gladwrap.h)
+target_link_libraries(love_3p_effekseer ${LOVE_LUA_LIBRARY})
+target_include_directories(love_3p_effekseer PUBLIC src/libraries/effekseer/src/Effekseer src/libraries/effekseer/src/include src/libraries/glad)
+
+#
 # enet
 #
 
@@ -1683,6 +1793,7 @@ add_library(love_3p_xxhash ${LOVE_SRC_3P_XXHASH})
 set(LOVE_3P
 	love_3p_box2d
 	love_3p_ddsparse
+	love_3p_effekseer
 	love_3p_enet
 	love_3p_glad
 	love_3p_glslang
@@ -1696,7 +1807,7 @@ set(LOVE_3P
 	love_3p_xxhash
 )
 
-love_disable_warnings(love_3p_box2d love_3p_enet love_3p_luasocket love_3p_physfs)
+love_disable_warnings(love_3p_box2d love_3p_effekseer love_3p_enet love_3p_luasocket love_3p_physfs)
 
 #
 # liblove
