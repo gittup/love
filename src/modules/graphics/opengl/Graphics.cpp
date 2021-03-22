@@ -111,6 +111,17 @@ love::graphics::Canvas *Graphics::newCanvas(const Canvas::Settings &settings)
 	return new Canvas(settings);
 }
 
+love::graphics::EffectManager *Graphics::newEffectManager()
+{
+	return new EffectManager();
+}
+
+love::graphics::Effect *Graphics::newEffect(EffectManager *manager, std::string &filename)
+{
+	love::graphics::Effect *effect = new Effect(manager, filename);
+	return effect;
+}
+
 love::graphics::ShaderStage *Graphics::newShaderStageInternal(ShaderStage::StageType stage, const std::string &cachekey, const std::string &source, bool gles)
 {
 	return new ShaderStage(this, stage, source, gles, cachekey);

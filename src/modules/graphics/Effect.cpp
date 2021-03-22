@@ -18,30 +18,33 @@
  * 3. This notice may not be removed or altered from any source distribution.
  **/
 
-#pragma once
-
 // LOVE
 #include "common/config.h"
-#include "wrap_EffectHandle.h"
-#include "wrap_EffectManager.h"
-#include "wrap_Font.h"
-#include "wrap_Image.h"
-#include "wrap_Quad.h"
-#include "wrap_SpriteBatch.h"
-#include "wrap_ParticleSystem.h"
-#include "wrap_Canvas.h"
-#include "wrap_Shader.h"
-#include "wrap_Mesh.h"
-#include "wrap_Text.h"
-#include "wrap_Video.h"
+#include "Effect.h"
+#include "EffectManager.h"
 #include "Graphics.h"
+
+#include "Effekseer.h"
+#include "EffekseerRendererGL.h"
 
 namespace love
 {
 namespace graphics
 {
 
-extern "C" LOVE_EXPORT int luaopen_love_graphics(lua_State *L);
+love::Type Effect::type("Effect", &Object::type);
+
+Effect::Effect(EffectManager *manager, std::string &filename)
+{
+	EFK_CHAR filename16[256];
+	::Effekseer::ConvertUtf8ToUtf16(filename16, 256, filename.c_str());
+	effect = Effekseer::Effect::Create(manager->getManager(), filename16);
+}
+
+::Effekseer::Effect *Effect::getEffect()
+{
+	return this->effect;
+}
 
 } // graphics
 } // love

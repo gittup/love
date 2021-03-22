@@ -33,6 +33,7 @@
 #include "vertex.h"
 #include "Texture.h"
 #include "Canvas.h"
+#include "Effect.h"
 #include "Font.h"
 #include "ShaderStage.h"
 #include "Shader.h"
@@ -483,6 +484,9 @@ public:
 	ParticleSystem *newParticleSystem(Texture *texture, int size);
 
 	virtual Canvas *newCanvas(const Canvas::Settings &settings) = 0;
+
+	virtual EffectManager *newEffectManager() = 0;
+	virtual Effect *newEffect(EffectManager *manager, std::string &filename) = 0;
 
 	ShaderStage *newShaderStage(ShaderStage::StageType stage, const std::string &source);
 	Shader *newShader(const std::string &vertex, const std::string &pixel);

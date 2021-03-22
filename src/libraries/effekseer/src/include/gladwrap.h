@@ -18,30 +18,5 @@
  * 3. This notice may not be removed or altered from any source distribution.
  **/
 
-#pragma once
-
-// LOVE
-#include "common/config.h"
-#include "wrap_EffectHandle.h"
-#include "wrap_EffectManager.h"
-#include "wrap_Font.h"
-#include "wrap_Image.h"
-#include "wrap_Quad.h"
-#include "wrap_SpriteBatch.h"
-#include "wrap_ParticleSystem.h"
-#include "wrap_Canvas.h"
-#include "wrap_Shader.h"
-#include "wrap_Mesh.h"
-#include "wrap_Text.h"
-#include "wrap_Video.h"
-#include "Graphics.h"
-
-namespace love
-{
-namespace graphics
-{
-
-extern "C" LOVE_EXPORT int luaopen_love_graphics(lua_State *L);
-
-} // graphics
-} // love
+#include "gladfuncs.hpp"
+using namespace glad;

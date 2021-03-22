@@ -31,6 +31,8 @@
 
 // LOVE
 #include "graphics/Graphics.h"
+#include "graphics/Effect.h"
+#include "graphics/EffectManager.h"
 #include "common/Color.h"
 
 #include "image/Image.h"
@@ -64,6 +66,8 @@ public:
 	love::graphics::Image *newImage(TextureType textype, PixelFormat format, int width, int height, int slices, const Image::Settings &settings) override;
 	love::graphics::Canvas *newCanvas(const Canvas::Settings &settings) override;
 	love::graphics::Buffer *newBuffer(size_t size, const void *data, BufferType type, vertex::Usage usage, uint32 mapflags) override;
+	love::graphics::EffectManager *newEffectManager();
+	love::graphics::Effect *newEffect(EffectManager *manager, std::string &filename);
 
 	void setViewportSize(int width, int height, int pixelwidth, int pixelheight) override;
 	bool setMode(int width, int height, int pixelwidth, int pixelheight, bool windowhasstencil) override;

@@ -1257,6 +1257,32 @@ int w_newCanvas(lua_State *L)
 	return 1;
 }
 
+int w_newEffectManager(lua_State *L)
+{
+	luax_checkgraphicscreated(L);
+
+	EffectManager *manager = nullptr;
+	luax_catchexcept(L, [&](){ manager = instance()->newEffectManager(); });
+	luax_pushtype(L, manager);
+	manager->release();
+	return 1;
+}
+
+int w_newEffect(lua_State *L)
+{
+	using namespace love::filesystem;
+
+	luax_checkgraphicscreated(L);
+
+	EffectManager *manager = luax_checkeffectmanager(L, 1);
+	Effect *effect = nullptr;
+	std::string filename = luax_checkstring(L, 2);
+	luax_catchexcept(L, [&](){ effect = instance()->newEffect(manager, filename); });
+	luax_pushtype(L, effect);
+	effect->release();
+	return 1;
+}
+
 static int w_getShaderSource(lua_State *L, int startidx, bool gles, std::string &vertexsource, std::string &pixelsource)
 {
 	using namespace love::filesystem;
@@ -2923,6 +2949,8 @@ static const luaL_Reg functions[] =
 	{ "newSpriteBatch", w_newSpriteBatch },
 	{ "newParticleSystem", w_newParticleSystem },
 	{ "newCanvas", w_newCanvas },
+	{ "newEffectManager", w_newEffectManager },
+	{ "newEffect", w_newEffect },
 	{ "newShader", w_newShader },
 	{ "newMesh", w_newMesh },
 	{ "newText", w_newText },
@@ -3042,6 +3070,8 @@ static int luaopen_drawable(lua_State *L)
 static const lua_CFunction types[] =
 {
 	luaopen_drawable,
+	luaopen_effecthandle,
+	luaopen_effectmanager,
 	luaopen_texture,
 	luaopen_font,
 	luaopen_image,

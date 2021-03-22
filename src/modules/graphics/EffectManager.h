@@ -18,30 +18,55 @@
  * 3. This notice may not be removed or altered from any source distribution.
  **/
 
-#pragma once
+#ifndef LOVE_GRAPHICS_EFFECT_MANAGER_H
+#define LOVE_GRAPHICS_EFFECT_MANAGER_H
 
-// LOVE
-#include "common/config.h"
-#include "wrap_EffectHandle.h"
-#include "wrap_EffectManager.h"
-#include "wrap_Font.h"
-#include "wrap_Image.h"
-#include "wrap_Quad.h"
-#include "wrap_SpriteBatch.h"
-#include "wrap_ParticleSystem.h"
-#include "wrap_Canvas.h"
-#include "wrap_Shader.h"
-#include "wrap_Mesh.h"
-#include "wrap_Text.h"
-#include "wrap_Video.h"
-#include "Graphics.h"
+#include "opengl/OpenGL.h"
+#include "Drawable.h"
+
+using namespace glad;
+#include "Effekseer.h"
+#include "EffekseerRendererGL.h"
 
 namespace love
 {
 namespace graphics
 {
 
-extern "C" LOVE_EXPORT int luaopen_love_graphics(lua_State *L);
+class Effect;
+class EffectHandle;
+
+class EffectManager : public Drawable
+{
+public:
+
+	static love::Type type;
+
+	EffectManager();
+
+	EffectHandle *play(Effect *effect);
+
+	void stop(EffectHandle *handle);
+
+	void stopAll();
+
+	::Effekseer::Manager *getManager();
+	::EffekseerRendererGL::Renderer *getRenderer();
+
+	void setProjection(Graphics *gfx);
+
+	void update(float dt);
+
+	void draw(Graphics *gfx, const Matrix4 &m);
+
+private:
+	::EffekseerRendererGL::Renderer *renderer;
+	::Effekseer::Manager *manager;
+
+	float updateCounter;
+}; // EffectManager
 
 } // graphics
 } // love
+
+#endif // LOVE_GRAPHICS_EFFECT_MANAGER_H
